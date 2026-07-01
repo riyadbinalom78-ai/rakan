@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Rakan Bhuiyan</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Noto+Serif+Bengali:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<style>
+/* ══════════════════════════════
+   TOKENS
+══════════════════════════════ */
+:root{
+  --bg:    #0d0b14;
+  --bg2:   #12101e;
+  --bg3:   #1a1630;
+  --card:  rgba(255,255,255,0.035);
+  --border:rgba(124,58,237,0.18);
+  --border2:rgba(255,255,255,0.07);
+  --p:     #7c3aed;   /* purple */
+  --p2:    #a855f7;   /* lighter purple */
+  --p3:    #c084fc;   /* lavender */
+  --pink:  #ec4899;
+  --pink2: #f472b6;
+  --text:  #f0eaff;
+  --muted: #9180b0;
+  --muted2:#5c4d7a;
+  --maxw:  1280px;
+  --nav-h: 68px;
+  --r:     16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+
+/* grain overlay */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.025;mix-blend-mode:overlay;z-index:9999;
+}
+
+/* ══════════════════════════════
+   STAR CANVAS
+══════════════════════════════ */
+#stars{
+  position:fixed;inset:0;
+  pointer-events:none;z-index:0;
+  opacity:.7;
+}
+
+/* ══════════════════════════════
+   NAVBAR
+══════════════════════════════ */
+.navbar{
+  position:sticky;top:0;z-index:300;
+  height:var(--nav-h);
+  display:flex;align-items:center;
+  background:rgba(13,11,20,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-in{
+  max-width:var(--maxw);margin:0 auto;
+  padding:0 32px;width:100%;
+  display:flex;align-items:center;
+  justify-content:space-between;
+}
+.nav-brand{
+  font-family:'Cinzel',serif;
+  font-weight:700;font-size:17px;
+  letter-spacing:.06em;
+  background:linear-gradient(120deg,var(--p3),var(--pink2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.nav-links{display:flex;gap:2px;}
+.nav-links a{
+  padding:7px 14px;border-radius:9px;
+  font-size:13.5px;font-weight:500;
+  color:var(--muted);transition:all .2s;
+}
+.nav-links a:hover{color:var(--p3);background:rgba(124,58,237,.1);}
+.nav-links a.active{
+  color:var(--p3);
+  background:rgba(124,58,237,.12);
+  border:1px solid rgba(124,58,237,.22);
+}
+.nav-ham{
+  display:none;background:none;
+  border:1px solid var(--border2);color:var(--muted);
+  width:40px;height:40px;border-radius:9px;
+  cursor:pointer;font-size:15px;
+  place-items:center;transition:all .2s;
+}
+.nav-ham:hover{color:var(--p3);border-color:var(--border);}
+.mob-menu{
+  display:none;position:fixed;
+  inset:0;top:var(--nav-h);
+  background:rgba(13,11,20,.97);
+  backdrop-filter:blur(24px);
+  z-index:200;flex-direction:column;
+  padding:20px;gap:4px;
+  border-top:1px solid var(--border);
+}
+.mob-menu.open{display:flex;}
+.mob-menu a{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;border-radius:12px;
+  font-size:15px;font-weight:500;
+  color:var(--muted);transition:all .2s;
+}
+.mob-menu a:hover,.mob-menu a.active{
+  color:var(--p3);background:rgba(124,58,237,.1);
+}
+.mob-menu a i{color:var(--p);width:18px;text-align:center;}
+
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
+.hero{
+  min-height:calc(100vh - var(--nav-h));
+  display:grid;
+  grid-template-columns:1fr 480px;
+  align-items:stretch;
+  position:relative;z-index:1;
+  overflow:hidden;
+}
+
+/* ambient purple glow */
+.hero::before{
+  content:'';position:absolute;
+  top:15%;left:8%;
+  width:560px;height:560px;border-radius:50%;
+  background:radial-gradient(circle,rgba(124,58,237,.07) 0%,transparent 68%);
+  pointer-events:none;
+  animation:pulse 7s ease-in-out infinite alternate;
+}
+.hero::after{
+  content:'';position:absolute;
+  bottom:10%;left:0%;
+  width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(236,72,153,.05) 0%,transparent 68%);
+  pointer-events:none;
+  animation:pulse 9s ease-in-out infinite alternate-reverse;
+}
+@keyframes pulse{
+  from{opacity:.6;transform:scale(.95);}
+  to{opacity:1;transform:scale(1.06);}
+}
+
+.hero-text{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 64px;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--p3);margin-bottom:24px;
+  opacity:0;animation:fadeUp .7s ease .1s forwards;
+}
+.hero-badge .dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--pink);
+  box-shadow:0 0 8px var(--pink);
+  animation:blink 2s ease infinite;
+}
+@keyframes blink{
+  0%,100%{opacity:1;}50%{opacity:.3;}
+}
+
+.hero-h1{
+  font-family:'Cinzel',serif;
+  font-size:clamp(44px,6vw,80px);
+  font-weight:900;
+  line-height:.95;
+  letter-spacing:-.01em;
+  margin-bottom:10px;
+  opacity:0;animation:fadeUp .7s ease .2s forwards;
+}
+.hero-h1 .name-top{
+  display:block;
+  background:linear-gradient(120deg,var(--text) 0%,var(--p3) 60%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-h1 .name-bot{
+  display:block;
+  background:linear-gradient(120deg,var(--p2) 0%,var(--pink) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+.hero-sub{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:clamp(14px,1.8vw,18px);
+  color:var(--muted);
+  line-height:1.7;
+  margin-bottom:32px;
+  max-width:440px;
+  opacity:0;animation:fadeUp .7s ease .32s forwards;
+}
+
+.hero-tags{
+  display:flex;flex-wrap:wrap;gap:9px;
+  margin-bottom:40px;
+  opacity:0;animation:fadeUp .7s ease .44s forwards;
+}
+.tag{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:12.5px;font-weight:500;
+  padding:7px 14px;border-radius:30px;
+  border:1px solid var(--border);
+  background:rgba(124,58,237,.07);
+  color:var(--p3);
+  transition:all .25s;
+}
+.tag:hover{
+  background:rgba(124,58,237,.15);
+  border-color:var(--p2);
+  transform:translateY(-2px);
+}
+.tag i{font-size:11px;color:var(--pink);}
+
+.hero-cta{
+  display:flex;gap:12px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .7s ease .56s forwards;
+}
+.btn-p{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:13px 26px;border-radius:11px;
+  background:linear-gradient(135deg,var(--p),var(--pink));
+  color:#fff;font-weight:600;font-size:14px;
+  box-shadow:0 6px 28px rgba(124,58,237,.28);
+  transition:all .28s;border:none;cursor:pointer;
+}
+.btn-p:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 40px rgba(124,58,237,.42);
+}
+.btn-g{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:12px 24px;border-radius:11px;
+  border:1px solid var(--border);
+  color:var(--muted);font-weight:500;font-size:14px;
+  transition:all .28s;
+}
+.btn-g:hover{
+  color:var(--p3);
+  border-color:rgba(124,58,237,.4);
+  background:rgba(124,58,237,.06);
+}
+
+/* Hero photo — full height panel like RBA */
+.hero-photo{
+  position:relative;overflow:hidden;
+  background:var(--bg2);
+  opacity:0;
+  animation:photoIn 1s cubic-bezier(.65,0,.35,1) .2s forwards;
+}
+@keyframes photoIn{
+  from{opacity:0;clip-path:inset(0 0 0 100%);}
+  to{opacity:1;clip-path:inset(0 0 0 0%);}
+}
+.hero-photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center top;
+  display:block;
+  transition:transform .7s ease;
+}
+.hero-photo:hover img{transform:scale(1.04);}
+
+/* gradient overlays */
+.hero-photo-ov{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to right, rgba(13,11,20,.55) 0%, rgba(13,11,20,.1) 22%, transparent 40%),
+    linear-gradient(to top, rgba(13,11,20,.7) 0%, rgba(13,11,20,.15) 22%, transparent 44%);
+  pointer-events:none;z-index:1;
+}
+
+/* subtle purple glow on the image */
+.hero-photo::before{
+  content:'';position:absolute;inset:0;z-index:2;
+  background:linear-gradient(135deg,rgba(124,58,237,.08) 0%,transparent 50%);
+  pointer-events:none;
+}
+
+/* ══════════════════════════════
+   SECTION COMMONS
+══════════════════════════════ */
+.section{
+  padding:100px 0;position:relative;z-index:1;
+}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+
+.sec-eye{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:var(--p2);margin-bottom:12px;
+}
+.sec-eye::before{
+  content:'';width:24px;height:1px;
+  background:linear-gradient(to right,var(--p),var(--pink));
+}
+.sec-h{
+  font-family:'Cinzel',serif;
+  font-size:clamp(28px,3.8vw,46px);
+  font-weight:700;line-height:1.1;
+  letter-spacing:-.01em;
+  margin-bottom:12px;
+}
+.sec-p{
+  color:var(--muted);font-size:15px;
+  max-width:50ch;line-height:1.9;
+  margin-bottom:56px;
+}
+.sec-p.bn{font-family:'Noto Serif Bengali',serif;}
+
+/* ══════════════════════════════
+   ABOUT
+══════════════════════════════ */
+.about-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+.about-card{
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  padding:30px;
+  transition:all .3s;
+  position:relative;overflow:hidden;
+}
+.about-card::after{
+  content:'';position:absolute;
+  inset:0;border-radius:20px;
+  background:linear-gradient(135deg,rgba(124,58,237,.04),transparent);
+  pointer-events:none;
+}
+.about-card:hover{
+  border-color:var(--border);
+  transform:translateY(-4px);
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+}
+.about-card.wide{grid-column:span 2;}
+.ac-icon{
+  width:50px;height:50px;border-radius:13px;
+  background:rgba(124,58,237,.1);
+  border:1px solid rgba(124,58,237,.2);
+  display:grid;place-items:center;
+  color:var(--p2);font-size:19px;
+  margin-bottom:18px;
+}
+.ac-h{
+  font-family:'Cinzel',serif;
+  font-size:17px;font-weight:600;
+  margin-bottom:8px;
+}
+.ac-p{font-size:14px;color:var(--muted);line-height:1.8;}
+.ac-big{
+  font-family:'Cinzel',serif;
+  font-size:56px;font-weight:900;
+  line-height:.9;
+  background:linear-gradient(135deg,var(--p3),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:6px;
+}
+
+/* ══════════════════════════════
+   INTERESTS
+══════════════════════════════ */
+.int-bg{
+  background:var(--bg2);
+  border-top:1px solid var(--border2);
+  border-bottom:1px solid var(--border2);
+}
+.interest-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+.int-card{
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:20px;
+  padding:32px 28px;
+  transition:all .3s;
+  text-align:center;
+  position:relative;overflow:hidden;
+  cursor:default;
+}
+.int-card::before{
+  content:'';position:absolute;
+  top:-60px;left:50%;transform:translateX(-50%);
+  width:160px;height:160px;border-radius:50%;
+  background:radial-gradient(circle,var(--glow) 0%,transparent 68%);
+  opacity:0;transition:opacity .4s;pointer-events:none;
+}
+.int-card:hover::before{opacity:1;}
+.int-card:hover{
+  border-color:var(--border);
+  transform:translateY(-5px);
+  box-shadow:0 24px 60px rgba(0,0,0,.42);
+}
+.int-card[data-glow="purple"]{--glow:rgba(124,58,237,.15);}
+.int-card[data-glow="pink"]{--glow:rgba(236,72,153,.12);}
+.int-card[data-glow="green"]{--glow:rgba(16,185,129,.1);}
+.int-emoji{
+  font-size:48px;margin-bottom:16px;
+  display:inline-block;
+  animation:float 4s ease-in-out infinite;
+}
+.int-card:nth-child(2) .int-emoji{animation-delay:1.3s;}
+.int-card:nth-child(3) .int-emoji{animation-delay:2.6s;}
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+}
+.int-h{
+  font-family:'Cinzel',serif;
+  font-size:17px;font-weight:600;
+  margin-bottom:10px;
+  color:var(--text);
+}
+.int-p{font-size:13.5px;color:var(--muted);line-height:1.8;}
+.int-tags{
+  display:flex;flex-wrap:wrap;gap:6px;
+  justify-content:center;
+  margin-top:16px;
+}
+.int-tag{
+  font-size:11px;padding:4px 10px;border-radius:20px;
+  background:rgba(124,58,237,.1);
+  border:1px solid rgba(124,58,237,.2);
+  color:var(--p3);
+}
+.int-card[data-glow="pink"] .int-tag{
+  background:rgba(236,72,153,.08);
+  border-color:rgba(236,72,153,.2);
+  color:var(--pink2);
+}
+.int-card[data-glow="green"] .int-tag{
+  background:rgba(16,185,129,.08);
+  border-color:rgba(16,185,129,.2);
+  color:#6ee7b7;
+}
+
+/* ══════════════════════════════
+   SKILLS
+══════════════════════════════ */
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:18px;
+}
+.skill-card{
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:18px;
+  padding:26px 28px;
+  transition:all .3s;
+}
+.skill-card:hover{
+  border-color:var(--border);
+  transform:translateY(-3px);
+  box-shadow:0 16px 44px rgba(0,0,0,.38);
+}
+.sk-top{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:14px;
+}
+.sk-info{display:flex;align-items:center;gap:12px;}
+.sk-ic{
+  width:44px;height:44px;border-radius:11px;
+  background:rgba(124,58,237,.1);
+  border:1px solid rgba(124,58,237,.18);
+  display:grid;place-items:center;
+  font-size:17px;
+}
+.sk-name{
+  font-family:'Cinzel',serif;
+  font-size:15px;font-weight:600;color:var(--text);
+}
+.sk-sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.sk-pct{
+  font-family:'Cinzel',serif;
+  font-size:20px;font-weight:700;
+  color:var(--p3);
+}
+.sk-bar{
+  height:4px;border-radius:4px;
+  background:var(--border2);overflow:hidden;
+}
+.sk-fill{
+  height:100%;border-radius:4px;
+  background:linear-gradient(to right,var(--p),var(--pink));
+  width:0;
+  transition:width 1.2s cubic-bezier(.45,0,.2,1);
+}
+.sk-fill.run{width:var(--w);}
+
+/* ══════════════════════════════
+   QUOTE BAND
+══════════════════════════════ */
+.quote-band{
+  background:linear-gradient(135deg,rgba(124,58,237,.12),rgba(236,72,153,.08));
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:80px 0;
+  position:relative;z-index:1;
+  overflow:hidden;
+}
+.quote-band::before{
+  content:'❝';
+  position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  font-size:220px;line-height:1;
+  color:rgba(124,58,237,.06);
+  pointer-events:none;user-select:none;
+  font-family:'Cinzel',serif;
+}
+.q-wrap{
+  max-width:720px;margin:0 auto;
+  padding:0 32px;text-align:center;
+  position:relative;z-index:1;
+}
+.q-text{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:clamp(18px,2.6vw,26px);
+  color:var(--text);
+  line-height:1.7;
+  margin-bottom:22px;
+  font-weight:400;
+}
+.q-src{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:12.5px;color:var(--muted);letter-spacing:.1em;
+}
+.q-src::before,.q-src::after{
+  content:'';width:40px;height:1px;
+  background:var(--border);
+}
+
+/* ══════════════════════════════
+   CONTACT
+══════════════════════════════ */
+.contact-card{
+  background:var(--card);
+  border:1px solid var(--border2);
+  border-radius:28px;
+  padding:72px 56px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.contact-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.cc-h{
+  font-family:'Cinzel',serif;
+  font-size:clamp(26px,3.5vw,42px);
+  font-weight:700;
+  margin-bottom:14px;
+  background:linear-gradient(120deg,var(--text),var(--p3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.cc-p{
+  font-family:'Noto Serif Bengali',serif;
+  font-size:15.5px;color:var(--muted);
+  max-width:42ch;margin:0 auto 36px;line-height:1.9;
+}
+.fb-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 32px;border-radius:12px;
+  background:linear-gradient(135deg,#1877f2,#0d5db5);
+  color:#fff;font-weight:600;font-size:15px;
+  box-shadow:0 8px 28px rgba(24,119,242,.28);
+  transition:all .28s;
+}
+.fb-btn:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 40px rgba(24,119,242,.4);
+}
+.fb-btn i{font-size:17px;}
+
+/* ══════════════════════════════
+   FOOTER
+══════════════════════════════ */
+.footer{
+  padding:48px 0 30px;
+  border-top:1px solid var(--border2);
+  position:relative;z-index:1;
+}
+.footer-in{
+  max-width:var(--maxw);margin:0 auto;
+  padding:0 32px;
+  display:flex;flex-direction:column;
+  align-items:center;gap:16px;
+}
+.footer-brand{
+  font-family:'Cinzel',serif;
+  font-size:26px;font-weight:700;
+  background:linear-gradient(120deg,var(--p3),var(--pink2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.footer-tag{
+  font-family:'Noto Serif Bengali',serif;
+  font-style:italic;font-size:13.5px;
+  color:var(--muted2);
+}
+.footer-links{display:flex;gap:2px;flex-wrap:wrap;justify-content:center;}
+.footer-links a{
+  font-size:13px;padding:5px 12px;border-radius:7px;
+  color:var(--muted2);transition:all .2s;
+}
+.footer-links a:hover{color:var(--p3);background:rgba(124,58,237,.07);}
+.footer-copy{
+  font-size:12.5px;color:rgba(145,128,176,.35);text-align:center;
+}
+
+/* ══════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.reveal{
+  opacity:0;transform:translateY(20px);
+  transition:opacity .7s ease,transform .7s ease;
+}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.08s;}
+.d2{transition-delay:.16s;}
+.d3{transition-delay:.24s;}
+.d4{transition-delay:.32s;}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media(max-width:1100px){
+  .hero{grid-template-columns:1fr 400px;}
+  .hero-text{padding:64px 44px;}
+}
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+    min-height:auto;
+  }
+  .hero-photo{
+    order:-1;
+    height:72vw;max-height:480px;
+  }
+  .hero-text{
+    padding:40px 24px 56px;
+    text-align:center;
+  }
+  .hero-badge,.hero-tags,.hero-cta{justify-content:center;}
+  .hero-sub{max-width:100%;}
+  .interest-grid{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;}
+  .about-card.wide{grid-column:span 1;}
+  .skills-grid{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .nav-ham{display:grid;}
+  .wrap,.footer-in{padding:0 20px;}
+  .contact-card{padding:48px 24px;}
+  .hero::before,.hero::after{display:none;}
+}
+@media(max-width:560px){
+  .section{padding:72px 0;}
+  .hero-photo{height:100vw;max-height:400px;}
+}
+</style>
+</head>
+<body>
+
+<!-- star canvas -->
+<canvas id="stars"></canvas>
+
+<!-- ════════ NAVBAR ════════ -->
+<nav class="navbar" id="nav">
+  <div class="nav-in">
+    <div class="nav-brand">Rakan Bhuiyan</div>
+    <div class="nav-links">
+      <a href="#hero" class="active">Home</a>
+      <a href="#about">About</a>
+      <a href="#interests">Interests</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="nav-ham" id="hamBtn" aria-label="Menu">
+      <i class="fa-solid fa-bars" id="hamIcon"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- mobile menu -->
+<div class="mob-menu" id="mobMenu">
+  <a href="#hero"      ><i class="fa-solid fa-house"></i>   Home</a>
+  <a href="#about"     ><i class="fa-solid fa-user"></i>    About</a>
+  <a href="#interests" ><i class="fa-solid fa-star"></i>    Interests</a>
+  <a href="#skills"    ><i class="fa-solid fa-bolt"></i>    Skills</a>
+  <a href="#contact"   ><i class="fa-solid fa-envelope"></i>Contact</a>
+</div>
+
+<!-- ════════ HERO ════════ -->
+<section id="hero">
+  <div class="hero">
+    <div class="hero-text">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        Madrasa Student · Bangladesh
+      </div>
+
+      <h1 class="hero-h1">
+        <span class="name-top">Rakan</span>
+        <span class="name-bot">Bhuiyan</span>
+      </h1>
+
+      <p class="hero-sub">
+        কুরআন ও জ্ঞানের পথে একজন সাধক — যে আবার
+        anime-র গল্পে হারিয়ে যায়, গেমের দুনিয়ায় জয় খোঁজে।
+      </p>
+
+      <div class="hero-tags">
+        <span class="tag"><i class="fa-solid fa-book-quran"></i> Islamic Studies</span>
+        <span class="tag"><i class="fa-solid fa-tv"></i> Anime</span>
+        <span class="tag"><i class="fa-solid fa-gamepad"></i> Gaming</span>
+        <span class="tag"><i class="fa-solid fa-location-dot"></i> Bangladesh</span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#about" class="btn-p">
+          <i class="fa-solid fa-user"></i> About Me
+        </a>
+        <a href="#contact" class="btn-g">
+          <i class="fa-brands fa-facebook-f"></i> Find Me
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-photo">
+      <img src="rakan.jpg" alt="Rakan Bhuiyan" loading="eager">
+      <div class="hero-photo-ov"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ABOUT ════════ -->
+<section id="about" class="section">
+  <div class="wrap">
+    <div class="sec-eye reveal">Who I Am</div>
+    <h2 class="sec-h reveal d1">একজন কৌতূহলী<br>মানুষের গল্প</h2>
+    <p class="sec-p bn reveal d2">
+      বাংলাদেশের একটা ছোট্ট কোণ থেকে, আমি পৃথিবীকে দেখি বিস্ময়ের চোখে।
+      দ্বীনের পথে চলি, আর স্বপ্ন দেখি বড় হওয়ার।
+    </p>
+
+    <div class="about-grid">
+      <div class="about-card wide reveal">
+        <div class="ac-icon"><i class="fa-solid fa-book-quran"></i></div>
+        <div class="ac-h">মাদরাসা জীবন</div>
+        <p class="ac-p">
+          আমি একজন মাদরাসা শিক্ষার্থী। প্রতিদিন কুরআন, হাদিস আর ইসলামিক জ্ঞানের
+          সাথে সময় কাটাই। দ্বীনের সেবায় নিজেকে গড়ে তোলাই আমার সবচেয়ে বড় লক্ষ্য।
+          পাশাপাশি দুনিয়াদারির ভালো জিনিসগুলোও উপভোগ করি — কারণ ভারসাম্যই প্রকৃত জ্ঞান।
+        </p>
+      </div>
+
+      <div class="about-card reveal d1">
+        <div class="ac-big">BD</div>
+        <p class="ac-p">
+          বাংলাদেশে জন্ম, বাংলাদেশেই বড় হচ্ছি।
+          <strong style="color:var(--text);">গর্বিত বাংলাদেশি</strong> — বিশ্বের দরবারে
+          নিজের পরিচয় তুলে ধরতে চাই।
+        </p>
+      </div>
+
+      <div class="about-card reveal d2">
+        <div class="ac-icon"><i class="fa-solid fa-star"></i></div>
+        <div class="ac-h">দুই জগতের বাসিন্দা</div>
+        <p class="ac-p">
+          কুরআনের তিলাওয়াতের পরপরই হয়তো anime-র নতুন এপিসোড,
+          নামাজের পরেই হয়তো একটা গেমের সেশন —
+          এটাই আমার জীবন, এটাই আমি।
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ INTERESTS ════════ -->
+<section id="interests" class="section int-bg">
+  <div class="wrap">
+    <div class="sec-eye reveal">What I Love</div>
+    <h2 class="sec-h reveal d1">আমার জগৎ</h2>
+    <p class="sec-p bn reveal d2">তিনটা জিনিস আমার দিনকে রঙিন করে রাখে।</p>
+
+    <div class="interest-grid">
+
+      <!-- Islamic -->
+      <div class="int-card reveal" data-glow="purple">
+        <div class="int-emoji">📖</div>
+        <div class="int-h">Quran & Islam</div>
+        <p class="int-p">
+          কুরআনের আলোয় জীবন গড়ি। ইসলামিক জ্ঞান অর্জন করা
+          আমার সবচেয়ে বড় আনন্দ এবং দায়িত্ব।
+        </p>
+        <div class="int-tags">
+          <span class="int-tag">তিলাওয়াত</span>
+          <span class="int-tag">হাদিস</span>
+          <span class="int-tag">ফিকহ</span>
+        </div>
+      </div>
+
+      <!-- Anime -->
+      <div class="int-card reveal d1" data-glow="pink">
+        <div class="int-emoji">⚔️</div>
+        <div class="int-h">Anime</div>
+        <p class="int-p">
+          অ্যানিমের গল্পগুলো আমাকে নিয়ে যায় অন্য এক দুনিয়ায়।
+          অ্যাকশন, ইসেকাই, থ্রিলার — সব ধরনের অ্যানিমেই ভালো লাগে।
+        </p>
+        <div class="int-tags">
+          <span class="int-tag">Action</span>
+          <span class="int-tag">Isekai</span>
+          <span class="int-tag">Shonen</span>
+        </div>
+      </div>
+
+      <!-- Gaming -->
+      <div class="int-card reveal d2" data-glow="green">
+        <div class="int-emoji">🎮</div>
+        <div class="int-h">Gaming</div>
+        <p class="int-p">
+          গেমের দুনিয়ায় প্রতিটা চ্যালেঞ্জ একটা নতুন সুযোগ।
+          কৌশল, দলগত খেলা আর জয়ের আনন্দ — এটাই gaming।
+        </p>
+        <div class="int-tags">
+          <span class="int-tag">Strategy</span>
+          <span class="int-tag">Action</span>
+          <span class="int-tag">RPG</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SKILLS ════════ -->
+<section id="skills" class="section">
+  <div class="wrap">
+    <div class="sec-eye reveal">My Skills</div>
+    <h2 class="sec-h reveal d1">যা পারি, যা শিখছি</h2>
+    <p class="sec-p bn reveal d2">প্রতিদিন একটু একটু করে বড় হচ্ছি।</p>
+
+    <div class="skills-grid">
+
+      <div class="skill-card reveal">
+        <div class="sk-top">
+          <div class="sk-info">
+            <div class="sk-ic">📖</div>
+            <div>
+              <div class="sk-name">Quran Recitation</div>
+              <div class="sk-sub">তিলাওয়াত ও হিফজ</div>
+            </div>
+          </div>
+          <div class="sk-pct">90%</div>
+        </div>
+        <div class="sk-bar"><div class="sk-fill" style="--w:90%;"></div></div>
+      </div>
+
+      <div class="skill-card reveal d1">
+        <div class="sk-top">
+          <div class="sk-info">
+            <div class="sk-ic">🕌</div>
+            <div>
+              <div class="sk-name">Islamic Studies</div>
+              <div class="sk-sub">ফিকহ ও হাদিস</div>
+            </div>
+          </div>
+          <div class="sk-pct">82%</div>
+        </div>
+        <div class="sk-bar"><div class="sk-fill" style="--w:82%;"></div></div>
+      </div>
+
+      <div class="skill-card reveal d2">
+        <div class="sk-top">
+          <div class="sk-info">
+            <div class="sk-ic">⚔️</div>
+            <div>
+              <div class="sk-name">Anime Knowledge</div>
+              <div class="sk-sub">প্লট, ক্যারেক্টার, লোর</div>
+            </div>
+          </div>
+          <div class="sk-pct">88%</div>
+        </div>
+        <div class="sk-bar"><div class="sk-fill" style="--w:88%;"></div></div>
+      </div>
+
+      <div class="skill-card reveal d3">
+        <div class="sk-top">
+          <div class="sk-info">
+            <div class="sk-ic">🎮</div>
+            <div>
+              <div class="sk-name">Gaming</div>
+              <div class="sk-sub">স্ট্র্যাটেজি ও টিমওয়ার্ক</div>
+            </div>
+          </div>
+          <div class="sk-pct">85%</div>
+        </div>
+        <div class="sk-bar"><div class="sk-fill" style="--w:85%;"></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════ QUOTE ════════ -->
+<div class="quote-band">
+  <div class="q-wrap reveal">
+    <p class="q-text">
+      "তোমাদের মধ্যে সেই ব্যক্তি সর্বোত্তম যে কুরআন শেখে এবং অন্যকে শেখায়।"
+    </p>
+    <div class="q-src">— রাসূলুল্লাহ ﷺ (বুখারি)</div>
+  </div>
+</div>
+
+<!-- ════════ CONTACT ════════ -->
+<section id="contact" class="section">
+  <div class="wrap">
+    <div class="contact-card reveal">
+      <h2 class="cc-h">আসুন কথা বলি</h2>
+      <p class="cc-p">
+        আমার সাথে যোগাযোগ করতে চাইলে Facebook-এ পাবেন।
+        ভালো কথা, ভালো মানুষ সবসময় স্বাগত।
+      </p>
+      <a href="https://www.facebook.com/share/1DHGoLopqr/" target="_blank" class="fb-btn">
+        <i class="fab fa-facebook-f"></i> Facebook-এ খুঁজুন
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="footer">
+  <div class="footer-in">
+    <div class="footer-brand">Rakan Bhuiyan</div>
+    <div class="footer-tag">কুরআনের আলো, জীবনের পথ</div>
+    <div class="footer-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#interests">Interests</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 · Rakan Bhuiyan · Made with 💜</div>
+  </div>
+</footer>
+
+<!-- ════════ JS ════════ -->
+<script>
+/* ── Star canvas ── */
+(function(){
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let W, H;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, {passive:true});
+
+  function mkStar(){
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.3 + 0.2,
+      a: Math.random(),
+      da: (Math.random() * 0.004 + 0.001) * (Math.random() < .5 ? 1 : -1),
+      color: Math.random() < .4 ? '#c084fc' : '#ffffff',
+    };
+  }
+
+  const N = 180;
+  for(let i=0;i<N;i++) stars.push(mkStar());
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    stars.forEach(s=>{
+      s.a += s.da;
+      if(s.a <= 0 || s.a >= 1) s.da *= -1;
+      ctx.globalAlpha = s.a * .7;
+      ctx.fillStyle = s.color;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── Hamburger ── */
+const hamBtn  = document.getElementById('hamBtn');
+const hamIcon = document.getElementById('hamIcon');
+const mobMenu = document.getElementById('mobMenu');
+let open = false;
+hamBtn.addEventListener('click', ()=>{
+  open = !open;
+  mobMenu.classList.toggle('open', open);
+  hamIcon.className = open ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+});
+mobMenu.querySelectorAll('a').forEach(a => a.addEventListener('click',()=>{
+  open = false;
+  mobMenu.classList.remove('open');
+  hamIcon.className = 'fa-solid fa-bars';
+}));
+
+/* ── Scroll reveal ── */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      io.unobserve(e.target);
+      /* animate skill bars */
+      e.target.querySelectorAll('.sk-fill').forEach(f=>f.classList.add('run'));
+    }
+  });
+}, {threshold: 0.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* also observe skill cards directly */
+document.querySelectorAll('.skill-card').forEach(el=>{
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.querySelectorAll('.sk-fill').forEach(f=>f.classList.add('run'));
+        observer.unobserve(e.target);
+      }
+    });
+  },{threshold:0.2});
+  observer.observe(el);
+});
+
+/* ── Active nav on scroll ── */
+const sections = ['hero','about','interests','skills','contact'];
+const navLinks = document.querySelectorAll('.nav-links a, .mob-menu a');
+window.addEventListener('scroll',()=>{
+  let cur = '';
+  sections.forEach(id=>{
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 120) cur = id;
+  });
+  navLinks.forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href')==='#'+cur);
+  });
+}, {passive:true});
+</script>
+</body>
+</html>
